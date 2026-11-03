@@ -1,5 +1,11 @@
 # Art and audio direction
 
+## Implemented presentation
+
+The two-flower slice now places a sculpted moss-covered vessel inside an original moonwater grove. Curved stems and broad attached leaves form the miniature; warm amber and cool mint flowers open on arrival, with persistent opening and fern growth after completion. The environment uses leaning trees, instanced foliage, a shallow water ring, stones, a moon gate, and restrained fireflies. A procedural radial texture supplies additive light halos without postprocessing.
+
+Assets remain deterministic and parentless in the manifest. Repeated vegetation uses instancing and shared materials; ambient motion follows reduced-motion preferences. Render statistics and visual/interaction evidence are recorded in the [presentation report](../engineering/presentation-verification.md). The direction below also describes future campaign work.
+
 ## Mood
 
 A small bioluminescent sculpture in a quiet night environment. Rounded pieces and clear geometric stems communicate function; restrained foliage supplies warmth. Keep the board readable before adding detail.

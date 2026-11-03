@@ -74,4 +74,4 @@ GardenPresentation consumes authoritative session events to animate light, petal
 
 Keep the default spatial dock compact. Tools reveals piece controls; Settings reveals comfort and reset controls. Explicit dimensions keep labels and touch targets within the owning panel. Retain validated select/place as an alternative to direct pinching. Use small procedural additive halos instead of framebuffer postprocessing, real-time shadows, or new asset dependencies. Honor reduced motion for decorative movement and light travel.
 
-The full grove and island require fresh scene/render and interaction verification before acceptance. Physical Quest tracking, reach, and frame rate remain unverified.
+Fresh native scene rendering, desktop solving, emulated hand-menu solving, direct grabbing, input-loss recovery, and hand-accessible exit passed. Decorative Sprite raycasts are disabled on placed clones because the XR pointer raycaster has no camera; the sprites remain visible. Spatial buttons activate on pointer contact rather than waiting for the library's 800 ms click window. Physical Quest tracking, reach, and frame rate remain unverified.

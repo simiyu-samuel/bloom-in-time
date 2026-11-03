@@ -80,9 +80,10 @@ export class GardenSystem extends createSystem({
     for (const [id,action] of Object.entries(spatialActions)) {
       const element=this.panel.requireElementById(id);
       element.name=id;
+      // Activate on contact; a deliberate poke may exceed the pointer library's click window.
       const listener=()=>this.act(action);
-      element.addEventListener('click',listener);
-      this.cleanupFuncs.push(()=>element.removeEventListener('click',listener));
+      element.addEventListener('pointerdown',listener);
+      this.cleanupFuncs.push(()=>element.removeEventListener('pointerdown',listener));
     }
     const toggle=document.getElementById('settings-toggle')!;
     const close=document.getElementById('settings-close')!;

@@ -8,21 +8,21 @@ Last updated: November 3, 2026.
 | Developer | Solo; no physical headset access expected |
 | Registration | Owner reports application/registration submitted; Start acceptance not independently verified |
 | Documentation | Product, design, architecture, engineering, delivery, submission baseline, and first prototype report |
-| Application | First two-flower puzzle implemented with a procedural garden, pulses, bloom, synthesized notes, undo/hint/reset, comfort controls, and local saves |
+| Application | Two-flower puzzle in a moonwater grove, sculpted living island, opening petals/restored foliage, light pulses, synthesized notes, orbit/zoom, contextual spatial controls, undo/hint/reset, comfort controls, and local saves |
 | SDK | IWSDK 1.1.0-rc.2 pinned in package-lock.json; Node 22.22.0; npm 11+ |
 | Repository | Public GitHub remote: https://github.com/simiyu-samuel/bloom-in-time |
-| Verification | 10 automated tests, typecheck, production build, desktop flow, emulated hands, and static production smoke test checked; touch misses remain a follow-up issue (see report) |
+| Verification | Rebuild: 10 tests, typecheck/build, desktop solve/orbit, emulated hand menu/grabs/recovery/exit, native visual review, and 18 static assets checked. Fresh production-browser automation blocked by browser policy; see presentation report |
 | Hosting | No public game deployment yet |
 | Campaign | One prototype puzzle; the six-puzzle release remains planned |
 | Submission / video | Draft plans only; not submitted or recorded |
 
-## Presentation rebuild checkpoint
+## Presentation rebuild
 
-A richer living island, surrounding moonwater grove, opening petals, restored foliage, additive light halos, desktop orbit/zoom, and a compact contextual spatial dock are authored. The interruption cleared a temporary working directory; the source was recovered into persistent storage. Fresh live verification and a final build are pending at this checkpoint. No new headset or performance claim is made.
+The richer island and grove are implemented and saved in the repository. Desktop solving and orbit, the compact spatial menu, left-hand grabbing/snapping, held-input loss, and hand-accessible exit passed fresh runtime checks. Decorative glows are excluded from XR hit testing, and spatial controls activate on contact so slow pokes do not expire. The [presentation verification report](../engineering/presentation-verification.md) records the final build and visual evidence. Physical Quest tracking, reach, comfort, and frame rate remain unverified.
 
 ## Next development phase
 
-Build the authored campaign around the verified mechanic: add level loading, witness validation, progression, and replay, then implement the remaining five puzzles. Simplify the spatial controls and verify the tutorial and each new level through emulated hands. Continue with [B06/B07 in the backlog](backlog.md); keep the existing two-flower loop passing.
+Build the authored campaign around the verified mechanic: add level loading, witness validation, progression, and replay, then implement the remaining five puzzles. Verify the tutorial and each new level through emulated hands, retaining the compact Tools/Settings dock. Continue with [B06/B07 in the backlog](backlog.md); keep the existing two-flower loop passing.
 
 ## Evidence
 

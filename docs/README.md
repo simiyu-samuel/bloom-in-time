@@ -21,6 +21,7 @@ The first playable two-flower slice exists. The six-puzzle campaign and release 
 - [Development workflow](engineering/development-workflow.md): current setup, SDK commands, and Git conventions.
 - [Testing and performance](engineering/testing-and-performance.md): evidence and budgets.
 - [Prototype verification](engineering/prototype-verification.md): actual first-slice results and limitations.
+- [Presentation verification](engineering/presentation-verification.md): grove rebuild, interaction regressions, and current render/build evidence.
 - [Deployment](engineering/deployment.md): static hosting, release, and freeze.
 - [Asset and privacy policy](engineering/asset-and-privacy-policy.md): provenance, storage, and permissions.
 - [Asset register](assets/asset-register.csv): original assets and dependency provenance.

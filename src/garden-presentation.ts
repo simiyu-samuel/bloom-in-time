@@ -1,4 +1,4 @@
-import { Group, Mesh, MeshBasicMaterial, SphereGeometry, Vector3, Points } from '@iwsdk/core';
+import { Group, Mesh, MeshBasicMaterial, SphereGeometry, Vector3, Points, Sprite } from '@iwsdk/core';
 import type { Object3D, CatmullRomCurve3, BufferGeometry } from '@iwsdk/core';
 import { routes, makeCurve } from './scene-assets/garden.scene-asset.ts';
 import { halo } from './scene-assets/botanical.ts';
@@ -36,6 +36,11 @@ export class GardenPresentation {
       tree.add(root);
       this.pulses.push({root,beads,curve:makeCurve(values),id,start:-1,duration:1});
     }
+    // Decorative billboards must never enter the XR pointer raycaster, which has no camera.
+    // Apply to placed clones, including the pulse glows created above.
+    for (const root of [tree,grove]) root.traverse(object=>{
+      if (object instanceof Sprite) object.raycast=()=>{};
+    });
     const motes=grove.getObjectByName('Grove fireflies');
     if (motes instanceof Points) {
       this.fireflies=motes;this.clonedGeometry=motes.geometry.clone();motes.geometry=this.clonedGeometry;

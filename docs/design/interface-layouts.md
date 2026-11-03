@@ -1,6 +1,14 @@
 # Interface layouts
 
-These are structural wireframes, not final art. Panel labels below must remain consistent across input modes.
+The implemented two-flower slice uses the layout below. Later wireframes describe the planned campaign. Panel labels must remain consistent across input modes.
+
+## Implemented presentation
+
+The desktop canvas fills the viewport with the living island and surrounding grove. A small title/objective sits at upper left, arrivals at upper right, and a compact action dock at the bottom. Selected-piece actions reserve a stable row. Dragging orbits the nonimmersive camera; wheel input zooms. Settings and confirmed reset use separate overlays.
+
+In XR, the default 62 cm spatial dock contains Play, Undo, Hint, Tools, and Exit VR. Tools reveals piece selection/place/return/turn, board rotation, and Settings. Settings reveals sound, motion, contrast, recenter, distance, height, and confirmed reset. Close returns to the compact dock. Buttons activate once on pointer contact. Direct pinching and discrete commands both use GardenSession. The tracked XR camera never receives desktop orbit updates.
+
+## Planned campaign wireframes
 
 ## Desktop entry
 

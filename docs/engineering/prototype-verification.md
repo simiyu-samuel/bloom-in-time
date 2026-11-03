@@ -2,6 +2,8 @@
 
 Date: November 3, 2026. Scope: the code in the commit containing this report, with one two-flower puzzle. This is a development milestone, not submission readiness.
 
+The subsequent [presentation rebuild report](presentation-verification.md) supersedes this baseline's scene cost, visual review, and spatial-menu status. The original checks below remain historical evidence.
+
 ## Environment
 
 Linux; Node 22.22.0; npm 11 for installation; TypeScript 5.9.3; Vite 7.3.7; IWSDK Core/CLI/Vite plugin 1.1.0-rc.2. Runtime checks used the SDK-managed HeadlessChrome 156, IWER Meta Quest 3 emulation, and an active `immersive-vr` session with hand tracking. The renderer reported Intel HD Graphics 4000 through Mesa/ANGLE. Production desktop smoke testing used the Codex in-app browser against the static `dist/` directory on localhost.

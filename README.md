@@ -53,6 +53,7 @@ The production output is `dist/`; it requires a static HTTPS host for WebXR. No 
 - [Architecture and diagrams](docs/architecture/overview.md)
 - [Development and SDK workflow](docs/engineering/development-workflow.md)
 - [Prototype verification report](docs/engineering/prototype-verification.md)
+- [Presentation rebuild verification](docs/engineering/presentation-verification.md)
 - [Competition requirements](docs/competition/requirements.md)
 
 The submission deadline is **November 18, 2026, 23:00 Africa/Nairobi / 20:00 UTC**. Quest performance, physical comfort, and real tracking reliability remain unverified. The full campaign, video, and release checklist are unfinished.
