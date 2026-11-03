@@ -6,3 +6,6 @@ favicon,Original botanical SVG,public/favicon.svg,Project original,Source licens
 desktop-font,Arial Helvetica Georgia system fallbacks,Browser system fonts,Platform vendors,Provided by operating system,None,Not redistributed,implemented
 spatial-font,UIKit bundled font,Installed UIKit dependency,Upstream authors,Preserve upstream package font notices,None,Dependency distribution,implemented
 sdk-scaffold,Meta starter configuration and scoped guidance,create-iwsdk 1.1.0-rc.2,Meta Platforms,MIT,Configuration adapted,LICENSES/Meta-IWSDK.txt,implemented
+grove,Original moonwater grove and vegetation,src/scene-assets/grove.scene-asset.ts,Project original,Source license undecided,Created for the visual rebuild,No external asset,implemented
+light-halos,Procedural radial RGBA texture and additive light,src/scene-assets/botanical.ts,Project original,Source license undecided,Generated deterministically without image files,No external asset,implemented
+model-kit,Loft and surface construction helper,Official IWSDK generator skill asset,Meta Platforms,MIT,Copied without modification,LICENSES/Meta-IWSDK.txt,implemented

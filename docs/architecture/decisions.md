@@ -65,3 +65,13 @@ Reason: editor-visible composition, reusable original assets, and one rules boun
 Implemented November 3, 2026. Require npm 11+, preserve the generator's super-three alias, and use the `$three` override reference. Omit optional MetaVR and semantic-reference tooling from the application dependencies. Use tsx to load TypeScript for Node tests.
 
 Evidence: the host's npm 9 rejected the alias override and optional semantic tooling attempted an unnecessary ONNX download. The reduced installation, typecheck, domain tests, and production build succeed. Consequence: contributors need npm 11; the README includes a parent-directory invocation for older hosts. No runtime AI or native headset dependency is introduced.
+
+## ADR-011: A spatial grove with a separate presentation layer
+
+Implemented November 3, 2026. Replace the empty backdrop with a native procedural grove around the seated player. Keep the central interaction volume clear. The living island, connected foliage, flowers, and grove are deterministic parentless assets; geometry and material authorship stays outside scene JSON.
+
+GardenPresentation consumes authoritative session events to animate light, petals, restored growth, and fireflies. It cannot change a placement or award success. DesktopView owns only nonimmersive inspection and yields to the tracked XR camera. Board-turn and comfort controls remain available to hands.
+
+Keep the default spatial dock compact. Tools reveals piece controls; Settings reveals comfort and reset controls. Explicit dimensions keep labels and touch targets within the owning panel. Retain validated select/place as an alternative to direct pinching. Use small procedural additive halos instead of framebuffer postprocessing, real-time shadows, or new asset dependencies. Honor reduced motion for decorative movement and light travel.
+
+The full grove and island require fresh scene/render and interaction verification before acceptance. Physical Quest tracking, reach, and frame rate remain unverified.

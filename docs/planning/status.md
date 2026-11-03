@@ -16,6 +16,10 @@ Last updated: November 3, 2026.
 | Campaign | One prototype puzzle; the six-puzzle release remains planned |
 | Submission / video | Draft plans only; not submitted or recorded |
 
+## Presentation rebuild checkpoint
+
+A richer living island, surrounding moonwater grove, opening petals, restored foliage, additive light halos, desktop orbit/zoom, and a compact contextual spatial dock are authored. The interruption cleared a temporary working directory; the source was recovered into persistent storage. Fresh live verification and a final build are pending at this checkpoint. No new headset or performance claim is made.
+
 ## Next development phase
 
 Build the authored campaign around the verified mechanic: add level loading, witness validation, progression, and replay, then implement the remaining five puzzles. Simplify the spatial controls and verify the tutorial and each new level through emulated hands. Continue with [B06/B07 in the backlog](backlog.md); keep the existing two-flower loop passing.

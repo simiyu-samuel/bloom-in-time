@@ -4,50 +4,50 @@
   "components": {
     "com.iwsdk.components.DomeGradient": {
       "sky": [
-        0.045,
-        0.09,
-        0.08,
+        0.014,
+        0.028,
+        0.046,
         1
       ],
       "equator": [
-        0.16,
-        0.25,
-        0.21,
+        0.04,
+        0.12,
+        0.14,
         1
       ],
       "ground": [
-        0.09,
-        0.15,
-        0.12,
+        0.025,
+        0.075,
+        0.075,
         1
       ],
       "intensity": 1
     },
     "com.iwsdk.components.IBLGradient": {
       "sky": [
-        0.65,
-        0.75,
-        0.67,
+        0.32,
+        0.47,
+        0.55,
         1
       ],
       "equator": [
-        0.44,
-        0.55,
-        0.45,
+        0.18,
+        0.32,
+        0.31,
         1
       ],
       "ground": [
-        0.19,
-        0.27,
-        0.21,
+        0.1,
+        0.15,
+        0.16,
         1
       ],
-      "intensity": 0.65
+      "intensity": 0.85
     }
   },
   "environment": {
     "toneMapping": "aces",
-    "exposure": 1.2,
+    "exposure": 1.1,
     "shadows": false
   },
   "resources": {},
@@ -58,20 +58,34 @@
         "role": "hero",
         "projection": "perspective",
         "position": [
-          0.46,
-          1.82,
-          0.3
+          0.5474663391218447,
+          1.6468729273683937,
+          1.1871433296101064
         ],
         "target": [
           0,
-          1.25,
-          -0.95
+          1.18,
+          -1.05
         ],
-        "fov": 42
+        "fov": 40
       }
     ]
   },
   "nodes": [
+    {
+      "id": "grove",
+      "name": "Moonwater grove",
+      "content": {
+        "type": "asset",
+        "asset": "grove"
+      },
+      "components": {
+        "DomeFade": {
+          "start": 5,
+          "end": 9
+        }
+      }
+    },
     {
       "id": "garden",
       "name": "Bloom in Time garden",
@@ -82,8 +96,8 @@
       "transform": {
         "position": [
           0,
-          1.05,
-          -0.95
+          0.84,
+          -1.05
         ]
       },
       "components": {
@@ -106,9 +120,9 @@
           },
           "transform": {
             "position": [
-              -0.18,
-              0.25,
-              0.015
+              -0.24,
+              0.42,
+              0.02
             ]
           },
           "components": {
@@ -128,9 +142,9 @@
           },
           "transform": {
             "position": [
-              -0.18,
-              0.26,
-              0.015
+              -0.24,
+              0.432,
+              0.02
             ]
           },
           "components": {
@@ -150,9 +164,9 @@
           },
           "transform": {
             "position": [
-              0.15,
-              0.06,
-              0.27
+              0.2,
+              0.07,
+              0.4
             ]
           },
           "components": {
@@ -173,8 +187,8 @@
           "transform": {
             "position": [
               0,
-              0.17,
-              0.07
+              0.262,
+              0.09
             ]
           },
           "components": {
@@ -195,8 +209,8 @@
       "transform": {
         "position": [
           0,
-          1.02,
-          -0.58
+          0.69,
+          -0.6
         ],
         "rotationDeg": [
           0,
@@ -214,25 +228,25 @@
       "id": "key-light",
       "transform": {
         "position": [
-          -2,
+          -3,
           5,
-          1
+          -2
         ],
         "rotationDeg": [
-          -55,
-          -30,
+          -50,
+          -20,
           0
         ]
       },
       "components": {
         "DirectionalLight": {
           "color": [
+            0.64,
+            0.82,
             1,
-            0.92,
-            0.76,
             1
           ],
-          "intensity": 2.6,
+          "intensity": 2.3,
           "castShadow": false
         }
       }
@@ -242,18 +256,69 @@
       "components": {
         "HemisphereLight": {
           "skyColor": [
-            0.7,
-            0.85,
-            0.8,
+            0.38,
+            0.58,
+            0.66,
             1
           ],
           "groundColor": [
-            0.32,
-            0.4,
-            0.28,
+            0.16,
+            0.27,
+            0.21,
             1
           ],
-          "intensity": 1.0
+          "intensity": 0.65
+        }
+      }
+    },
+    {
+      "id": "amber-rim",
+      "transform": {
+        "position": [
+          1,
+          3,
+          2
+        ],
+        "rotationDeg": [
+          -35,
+          25,
+          0
+        ]
+      },
+      "components": {
+        "DirectionalLight": {
+          "color": [
+            1,
+            0.81,
+            0.51,
+            1
+          ],
+          "intensity": 1.35,
+          "castShadow": false
+        }
+      }
+    },
+    {
+      "id": "seed-light",
+      "transform": {
+        "position": [
+          0,
+          1.0,
+          -0.8
+        ]
+      },
+      "components": {
+        "PointLight": {
+          "color": [
+            1,
+            0.74,
+            0.36,
+            1
+          ],
+          "intensity": 0.35,
+          "distance": 2,
+          "decay": 2,
+          "castShadow": false
         }
       }
     }

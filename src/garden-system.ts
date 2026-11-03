@@ -1,18 +1,20 @@
 import {
   createSystem, Grabbed, Pressed, GrabSystem, VisibilityState, UIKitMLAsset,
-  UIKit, Mesh, MeshBasicMaterial, SphereGeometry, Vector3,
+  UIKit, Vector3,
 } from '@iwsdk/core';
-import type { Entity, Object3D, CatmullRomCurve3 } from '@iwsdk/core';
+import type { Entity, Object3D } from '@iwsdk/core';
 import { GardenPiece, GardenSocket, GardenState } from './garden-components.ts';
 import { GardenSession } from './application/session.ts';
 import { readSave, writeSave, defaults } from './application/storage.ts';
 import type { Preferences } from './application/storage.ts';
 import { firstLevel } from './content/first-level.ts';
-import { points, routes, makeCurve } from './scene-assets/garden.scene-asset.ts';
+import { points, trayPositions, gardenOrigin } from './scene-assets/garden.scene-asset.ts';
 import { GardenAudio } from './adapters-audio.ts';
+import { GardenPresentation } from './garden-presentation.ts';
+import { DesktopView } from './desktop-view.ts';
 
 type Action = 'play'|'bend'|'delay'|'place'|'return'|'turn'|'undo'|'hint'|'reset'|'confirm'|'cancel'|
-  'mute'|'motion'|'contrast'|'left'|'right'|'recenter'|'near'|'far'|'lower'|'higher'|'xr'|'exit';
+  'tools'|'settings'|'mute'|'motion'|'contrast'|'left'|'right'|'recenter'|'near'|'far'|'lower'|'higher'|'xr'|'exit';
 
 const domActions: Record<string, Action> = {
   play:'play','select-bend':'bend','select-delay':'delay',place:'place',return:'return',turn:'turn',
@@ -25,7 +27,7 @@ const spatialActions: Record<string, Action> = {
   Btn_Turn:'turn',Btn_Undo:'undo',Btn_Hint:'hint',Btn_Reset:'reset',Btn_ConfirmReset:'confirm',
   Btn_Mute:'mute',Btn_Motion:'motion',Btn_Contrast:'contrast',Btn_ViewLeft:'left',Btn_ViewRight:'right',
   Btn_Recenter:'recenter',Btn_Near:'near',Btn_Far:'far',Btn_Lower:'lower',Btn_Higher:'higher',
-  Btn_XR:'xr',Btn_Exit:'exit',
+  Btn_XR:'xr',Btn_Exit:'exit',Btn_Tools:'tools',Btn_Settings:'settings',
 };
 
 export class GardenSystem extends createSystem({
@@ -41,8 +43,9 @@ export class GardenSystem extends createSystem({
   private tree!: Object3D;
   private state!: Entity;
   private panel!: UIKitMLAsset;
-  private flowers: Object3D[] = [];
-  private pulses: { mesh:Mesh; curve:CatmullRomCurve3; linkId:string; start:number; duration:number }[] = [];
+  private presentation!:GardenPresentation;
+  private desktopView!:DesktopView;
+  private panelMode:'main'|'build'|'settings'='main';
   private beatDots: HTMLElement[] = [];
   private scratch = new Vector3();
   private second = new Vector3();
@@ -60,13 +63,9 @@ export class GardenSystem extends createSystem({
     const save = readSave(firstLevel);
     this.preferences = save.preferences;
     this.session = new GardenSession(firstLevel, save.placements);
-    this.flowers = [this.tree.getObjectByName('flower-a')!, this.tree.getObjectByName('flower-b')!];
-    for (const [linkId, values] of Object.entries(routes)) {
-      const mesh = new Mesh(new SphereGeometry(.012,10,8),new MeshBasicMaterial({color:'#ffe4a4'}));
-      mesh.name = 'Pulse '+linkId; mesh.visible=false;
-      this.world.createTransformEntity(mesh);
-      this.pulses.push({ mesh, curve:makeCurve(values), linkId, start:-1, duration:firstLevel.links.find(link=>link.id===linkId)!.travelBeats });
-    }
+    this.presentation=new GardenPresentation(this.tree,this.world.requireSceneObject('grove'));
+    this.desktopView=new DesktopView(this.world);
+    this.cleanupFuncs.push(()=>this.presentation.dispose(),()=>this.desktopView.dispose());
     const track = document.getElementById('beat-track')!;
     for (let index=0;index<8;index++) {
       const dot=document.createElement('span'); dot.className='beat'; track.append(dot); this.beatDots.push(dot);
@@ -96,6 +95,19 @@ export class GardenSystem extends createSystem({
     const closeSettings=()=>setSettings(false);
     toggle.addEventListener('click',openSettings); close.addEventListener('click',closeSettings);
     this.cleanupFuncs.push(()=>toggle.removeEventListener('click',openSettings),()=>close.removeEventListener('click',closeSettings));
+    const keyboard=(event:KeyboardEvent)=>{
+      if (event.key==='Escape') {
+        if (this.confirming) this.act('cancel');
+        else if (!document.getElementById('settings-panel')!.hidden) setSettings(false);
+      }
+      if (event.key==='Tab'&&this.confirming) {
+        const first=document.getElementById('confirm-reset')!,last=document.getElementById('cancel-reset')!;
+        if (event.shiftKey&&document.activeElement===first) {event.preventDefault();last.focus();}
+        else if (!event.shiftKey&&document.activeElement===last) {event.preventDefault();first.focus();}
+      }
+    };
+    document.addEventListener('keydown',keyboard);
+    this.cleanupFuncs.push(()=>document.removeEventListener('keydown',keyboard));
 
     this.cleanupFuncs.push(
       this.queries.pressedPieces.subscribe('qualify',(entity)=>{
@@ -118,7 +130,7 @@ export class GardenSystem extends createSystem({
         this.tree.worldToLocal(this.scratch);
         this.second.set(...points.hold);
         if (this.scratch.distanceTo(this.second)<.09) this.place('hold');
-        else if (this.scratch.z>.19) this.removeSelected();
+        else if (this.scratch.z>.30 && Math.abs(this.scratch.x)<.5) this.removeSelected();
         this.session.endManipulation();
         if (!this.session.paused) this.audio.unlock();
         this.syncPieces();
@@ -143,7 +155,7 @@ export class GardenSystem extends createSystem({
       xrSession.addEventListener('inputsourceschange',lostInput);
       detachInputWatch=()=>xrSession.removeEventListener('inputsourceschange',lostInput);
     };
-    const onSessionEnd=()=>{ this.confirming=false; this.cancelAndPause(); detachInputWatch?.(); document.body.classList.remove('immersive'); };
+    const onSessionEnd=()=>{ this.confirming=false; this.panelMode='main'; this.cancelAndPause(); detachInputWatch?.(); document.body.classList.remove('immersive'); };
     document.addEventListener('visibilitychange',onHidden);
     this.world.renderer.xr.addEventListener('sessionend',onSessionEnd);
     this.world.renderer.xr.addEventListener('sessionstart',attachInputWatch);
@@ -197,10 +209,16 @@ export class GardenSystem extends createSystem({
       }
       case 'undo': this.session.dispatch({type:'undo'}); break;
       case 'hint': this.session.dispatch({type:'requestHint'}); break;
-      case 'reset': this.confirming=!this.confirming; break;
+      case 'reset':
+        this.confirming=!this.confirming;
+        document.getElementById('settings-panel')!.hidden=true;
+        document.getElementById('settings-toggle')!.setAttribute('aria-expanded','false');
+        break;
       case 'confirm':
         this.session.dispatch({type:'reset'}); this.confirming=false; this.session.select(null); break;
       case 'cancel': this.confirming=false; break;
+      case 'tools': this.panelMode=this.panelMode==='main'?'build':'main'; break;
+      case 'settings': this.panelMode=this.panelMode==='settings'?'build':'settings'; break;
       case 'mute': this.preferences.muted=!this.preferences.muted; break;
       case 'motion': this.preferences.reducedMotion=!this.preferences.reducedMotion; break;
       case 'contrast': this.preferences.highContrast=!this.preferences.highContrast; break;
@@ -210,11 +228,15 @@ export class GardenSystem extends createSystem({
       case 'far': this.tree.position.z=Math.max(-1.5,this.tree.position.z-.1); break;
       case 'lower': this.tree.position.y=Math.max(.65,this.tree.position.y-.05); break;
       case 'higher': this.tree.position.y=Math.min(1.3,this.tree.position.y+.05); break;
-      case 'recenter': this.tree.position.set(0,1.05,-.95); this.tree.rotation.set(0,0,0); break;
+      case 'recenter': this.tree.position.set(...gardenOrigin); this.tree.rotation.set(0,0,0); this.desktopView.reset(); break;
       case 'xr': void Promise.resolve(this.world.launchXR()).catch(()=>{this.session.message='VR entry was unavailable. You can keep playing here.';this.session.notify();}); break;
-      case 'exit': this.cancelAndPause(); void this.world.exitXR(); break;
+      case 'exit': this.confirming=false; this.panelMode='main'; this.cancelAndPause(); void this.world.exitXR(); break;
     }
     this.refresh();
+    if (!this.world.renderer.xr.isPresenting) {
+      if (action==='reset'&&this.confirming) document.getElementById('confirm-reset')!.focus();
+      if (action==='confirm'||action==='cancel') document.getElementById('settings-toggle')!.focus();
+    }
   }
 
   private syncPieces(): void {
@@ -229,10 +251,12 @@ export class GardenSystem extends createSystem({
         object.position.set(point[0],point[1]+.012,point[2]);
         object.rotation.y=entry[1].orientationId==='reverse'?Math.PI:0;
       } else {
-        object.position.set(id==='delay-1'?.15:id==='fork-1'?0:-.15,.06,.27);
+        const tray=trayPositions[id as keyof typeof trayPositions];
+        if (tray) object.position.set(tray[0],tray[1],tray[2]);
         object.rotation.set(0,0,0);
       }
-      object.scale.setScalar(this.session.selected===id?1.12:1);
+      object.scale.setScalar(this.session.selected===id?1.10:1);
+      const selected=object.getObjectByName('Selection halo');if (selected) selected.visible=this.session.selected===id;
     }
   }
 
@@ -240,15 +264,15 @@ export class GardenSystem extends createSystem({
     if (!this.ready) return;
     const session=this.session, a=session.evaluation.arrivals['flower-a']?.[0], b=session.evaluation.arrivals['flower-b']?.[0];
     this.syncPieces(); this.previousBeat=-1;
-    for (const pulse of this.pulses) {
-      const event=session.evaluation.events.find(e=>e.type==='depart'&&e.linkId===pulse.linkId);
-      pulse.start=event?.cycleBeat ?? -1;
-    }
+    this.presentation.sync(session);
     this.audio.muted=this.preferences.muted;
     document.body.classList.toggle('reduced-motion',this.preferences.reducedMotion);
     document.body.classList.toggle('high-contrast',this.preferences.highContrast);
     document.body.dataset.complete=String(session.complete);
     document.body.dataset.revision=String(session.revision);
+    document.body.dataset.selected=session.selected??'none';
+    const selectionName=session.selected==='delay-1'?'Delay pod':session.selected==='bend-1'?'Bend':'';
+    document.getElementById('selection-label')!.textContent=selectionName?selectionName+' selected':'Choose a piece';
     const text=(id:string,value:string)=>{document.getElementById(id)!.textContent=value;};
     text('arrival-a',a===undefined?'Waiting':a+' beats'); text('arrival-b',b===undefined?'Waiting':b+' beats');
     text('harmony-status',session.complete?'A little world, awake.':session.evaluation.solved?'In harmony':a!==undefined&&b!==undefined?'Almost in harmony':'A flower is waiting');
@@ -263,14 +287,25 @@ export class GardenSystem extends createSystem({
       document.getElementById(id)!.setAttribute('aria-pressed',String(value));
     }
     document.getElementById('reset-dialog')!.hidden=!this.confirming;
-    this.panel.requireElementById<UIKit.Text>('GardenStatus').setProperties({text:session.message,color:this.preferences.highContrast?'#102a1b':'#465a48'});
-    this.panel.requireElementById<UIKit.Text>('ArrivalStatus').setProperties({text:'Flower A: '+(a??'waiting')+'   Flower B: '+(b??'waiting')});
-    this.panel.requireElementById('PanelRoot').setProperties({backgroundColor:this.preferences.highContrast?'#ffffff':session.complete?'#d1e1b5':'#f4f1df'});
+    this.panel.requireElementById<UIKit.Text>('GardenStatus').setProperties({text:session.message,color:this.preferences.highContrast?'#ffffff':'#c4d8c9'});
+    this.panel.requireElementById<UIKit.Text>('ArrivalStatus').setProperties({text:'A: '+(a??'waiting')+' beats / B: '+(b??'waiting')+' beats'});
+    this.panel.requireElementById('PanelRoot').setProperties({backgroundColor:this.preferences.highContrast?'#061c24':session.complete?'#23423b':'#163438'});
+    this.panel.requireElementById('BuildTools').setProperties({display:this.panelMode==='build'?'flex':'none'});
+    this.panel.requireElementById('ComfortTools').setProperties({display:this.panelMode==='settings'?'flex':'none'});
+    this.panel.requireElementById('Btn_ToolsLabel').setProperties({text:this.panelMode==='main'?'Tools':'Close'});
+    for (const [id,piece] of [['Btn_Bend','bend-1'],['Btn_Delay','delay-1']]) {
+      const selected=session.selected===piece;
+      this.panel.requireElementById(id).setProperties({backgroundColor:selected?'#d8c28d':'#294b4c',color:selected?'#19332d':'#e3e8d3'});
+    }
+    this.panel.requireElementById('Btn_Undo').setProperties({disabled:!session.canUndo});
     this.panel.requireElementById('Btn_PlayLabel').setProperties({text:session.paused?'Play':'Pause'});
     this.panel.requireElementById('Btn_ResetLabel').setProperties({text:this.confirming?'Cancel':'Reset'});
     this.panel.requireElementById('Btn_ConfirmReset').setProperties({display:this.confirming?'flex':'none'});
     this.panel.requireElementById('Btn_MuteLabel').setProperties({text:this.preferences.muted?'Sound off':'Sound on'});
     this.panel.requireElementById('Btn_MotionLabel').setProperties({text:this.preferences.reducedMotion?'Motion reduced':'Motion on'});
+    this.state.setValue(GardenState,'selectedPiece',session.selected??'');
+    this.state.setValue(GardenState,'uiMode',this.panelMode);
+    for (const [id,piece] of [['select-bend','bend-1'],['select-delay','delay-1']]) document.getElementById(id)!.setAttribute('aria-pressed',String(session.selected===piece));
     this.state.setValue(GardenState,'revision',session.revision);
     this.state.setValue(GardenState,'complete',session.complete);
     this.state.setValue(GardenState,'paused',session.paused);
@@ -286,24 +321,12 @@ export class GardenSystem extends createSystem({
     const beat=this.session.beat;
     this.state.setValue(GardenState,'beat',beat);
     const visible=!this.session.paused&&!this.session.manipulating;
-    for (const pulse of this.pulses) {
-      const progress=pulse.start>=0?(beat-pulse.start)/pulse.duration:-1;
-      pulse.mesh.visible=visible&&progress>=0&&progress<1;
-      if (pulse.mesh.visible) {
-        pulse.curve.getPointAt(progress,this.scratch);
-        this.tree.localToWorld(this.scratch); pulse.mesh.position.copy(this.scratch);
-      }
-    }
+    this.desktopView.update(delta);
+    this.presentation.update(delta,this.session,this.preferences.reducedMotion);
     const wrapped=beat<this.previousBeat;
     for (let index=0;index<2;index++) {
       const arrival=this.session.evaluation.arrivals[index===0?'flower-a':'flower-b']?.[0];
-      const fresh=arrival!==undefined&&visible&&beat>=arrival&&(wrapped||this.previousBeat<arrival);
-      if (fresh) this.audio.note(index===0?72:76);
-      const bloom=this.session.complete || (arrival!==undefined&&visible&&beat>=arrival&&beat<arrival+.7);
-      const target=bloom?1.12:.60;
-      const flower=this.flowers[index];
-      const scale=this.preferences.reducedMotion?target:flower.scale.x+(target-flower.scale.x)*Math.min(1,delta*7);
-      flower.scale.setScalar(scale);
+      if (arrival!==undefined&&visible&&beat>=arrival&&(wrapped||this.previousBeat<arrival)) this.audio.note(index===0?72:76);
     }
     this.previousBeat=beat;
     this.uiTime+=delta;

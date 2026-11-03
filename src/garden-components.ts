@@ -6,6 +6,8 @@ export const GardenSocket = createComponent('GardenSocket', {
   socketId: { type: Types.String, default: '' },
 });
 export const GardenState = createComponent('GardenState', {
+  selectedPiece: { type: Types.String, default: '' },
+  uiMode: { type: Types.String, default: 'main' },
   revision: { type: Types.Int32, default: 0 },
   complete: { type: Types.Boolean, default: false },
   paused: { type: Types.Boolean, default: true },

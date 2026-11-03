@@ -37,7 +37,8 @@ export class GardenSession {
 
   select(pieceId: string | null): void {
     this.selected = pieceId;
-    this.message = pieceId ? 'Choose a socket, or turn a piece already in the garden.' : 'Follow the light.';
+    const label=this.level.pieces.find(piece=>piece.id===pieceId)?.kind==='delay'?'Delay pod':'Bend';
+    this.message = pieceId ? label+' selected. Choose a socket, or turn the piece.' : 'Follow the light.';
     this.notify();
   }
 
