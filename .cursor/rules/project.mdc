@@ -1,0 +1,9 @@
+---
+description: Repository-wide Bloom in Time implementation and evidence rules
+alwaysApply: true
+---
+
+# Project context
+
+Read and follow the repository-root AGENTS.md and the relevant linked design documents.
+These instructions apply across the repository, including documentation and future application code.

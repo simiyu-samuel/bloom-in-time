@@ -1,0 +1,27 @@
+# Future JavaScript build and tooling output
+node_modules/
+dist/
+coverage/
+.vite/
+playwright-report/
+test-results/
+*.tsbuildinfo
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.aws/
+.codex/
+.agents/
+
+# Local operating system files
+.DS_Store
+Thumbs.db
+*.log
+
+# Large working media; add final submission assets deliberately
+recordings/
+captures/
