@@ -1,0 +1,261 @@
+{
+  "version": "iwsdk.scene.v1",
+  "units": "meters",
+  "components": {
+    "com.iwsdk.components.DomeGradient": {
+      "sky": [
+        0.045,
+        0.09,
+        0.08,
+        1
+      ],
+      "equator": [
+        0.16,
+        0.25,
+        0.21,
+        1
+      ],
+      "ground": [
+        0.09,
+        0.15,
+        0.12,
+        1
+      ],
+      "intensity": 1
+    },
+    "com.iwsdk.components.IBLGradient": {
+      "sky": [
+        0.65,
+        0.75,
+        0.67,
+        1
+      ],
+      "equator": [
+        0.44,
+        0.55,
+        0.45,
+        1
+      ],
+      "ground": [
+        0.19,
+        0.27,
+        0.21,
+        1
+      ],
+      "intensity": 0.65
+    }
+  },
+  "environment": {
+    "toneMapping": "aces",
+    "exposure": 1.2,
+    "shadows": false
+  },
+  "resources": {},
+  "authoring": {
+    "views": [
+      {
+        "id": "hero",
+        "role": "hero",
+        "projection": "perspective",
+        "position": [
+          0.46,
+          1.82,
+          0.3
+        ],
+        "target": [
+          0,
+          1.25,
+          -0.95
+        ],
+        "fov": 42
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "id": "garden",
+      "name": "Bloom in Time garden",
+      "content": {
+        "type": "asset",
+        "asset": "garden"
+      },
+      "transform": {
+        "position": [
+          0,
+          1.05,
+          -0.95
+        ]
+      },
+      "components": {
+        "GardenState": {
+          "revision": 0,
+          "complete": false,
+          "paused": true,
+          "beat": 0,
+          "leftArrival": 3,
+          "rightArrival": 4
+        }
+      },
+      "children": [
+        {
+          "id": "hold-socket",
+          "name": "Empty socket",
+          "content": {
+            "type": "asset",
+            "asset": "socket"
+          },
+          "transform": {
+            "position": [
+              -0.18,
+              0.25,
+              0.015
+            ]
+          },
+          "components": {
+            "RayInteractable": {},
+            "PokeInteractable": {},
+            "GardenSocket": {
+              "socketId": "hold"
+            }
+          }
+        },
+        {
+          "id": "piece-bend",
+          "name": "Bend",
+          "content": {
+            "type": "asset",
+            "asset": "bend"
+          },
+          "transform": {
+            "position": [
+              -0.18,
+              0.26,
+              0.015
+            ]
+          },
+          "components": {
+            "RayInteractable": {},
+            "OneHandGrabbable": {},
+            "GardenPiece": {
+              "pieceId": "bend-1"
+            }
+          }
+        },
+        {
+          "id": "piece-delay",
+          "name": "Delay pod",
+          "content": {
+            "type": "asset",
+            "asset": "delay"
+          },
+          "transform": {
+            "position": [
+              0.15,
+              0.06,
+              0.27
+            ]
+          },
+          "components": {
+            "RayInteractable": {},
+            "OneHandGrabbable": {},
+            "GardenPiece": {
+              "pieceId": "delay-1"
+            }
+          }
+        },
+        {
+          "id": "piece-splitter",
+          "name": "Splitter",
+          "content": {
+            "type": "asset",
+            "asset": "splitter"
+          },
+          "transform": {
+            "position": [
+              0,
+              0.17,
+              0.07
+            ]
+          },
+          "components": {
+            "GardenPiece": {
+              "pieceId": "fork-1"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "garden-controls",
+      "name": "Garden controls",
+      "content": {
+        "type": "asset",
+        "asset": "controls"
+      },
+      "transform": {
+        "position": [
+          0,
+          1.02,
+          -0.58
+        ],
+        "rotationDeg": [
+          0,
+          0,
+          0
+        ],
+        "scale": 1
+      },
+      "components": {
+        "RayInteractable": {},
+        "PokeInteractable": {}
+      }
+    },
+    {
+      "id": "key-light",
+      "transform": {
+        "position": [
+          -2,
+          5,
+          1
+        ],
+        "rotationDeg": [
+          -55,
+          -30,
+          0
+        ]
+      },
+      "components": {
+        "DirectionalLight": {
+          "color": [
+            1,
+            0.92,
+            0.76,
+            1
+          ],
+          "intensity": 2.6,
+          "castShadow": false
+        }
+      }
+    },
+    {
+      "id": "fill-light",
+      "components": {
+        "HemisphereLight": {
+          "skyColor": [
+            0.7,
+            0.85,
+            0.8,
+            1
+          ],
+          "groundColor": [
+            0.32,
+            0.4,
+            0.28,
+            1
+          ],
+          "intensity": 1.0
+        }
+      }
+    }
+  ]
+}

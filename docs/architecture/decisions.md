@@ -1,10 +1,10 @@
 # Architecture decision record
 
-Decisions dated November 3, 2026. These are implementation proposals within the agreed product direction; revisit when evidence warrants.
+Decisions dated November 3, 2026. ADR-001 through ADR-007 are implemented in the first slice; ADR-008 remains a release requirement. Revisit when evidence warrants.
 
 ## ADR-001: Static browser application
 
-Use a static IWSDK application, proposed TypeScript and Vite, with browser-local progress. No backend is needed for the puzzle loop.
+Use a static IWSDK application with TypeScript and Vite, with browser-local progress. No backend is needed for the puzzle loop.
 
 Reason: solo scope, simple hosted link, no credentials or remote service needed to play. Consequence: saves are device/browser/origin-local and cannot sync. Changing the hosting origin will not carry progress automatically.
 
@@ -36,7 +36,7 @@ Reason: keyboard/mouse development must exercise real game logic, while the fina
 
 Use the current official generator when implementation starts, inspect its output, and commit compatible dependencies and lockfile.
 
-Reason: package details may change. Consequence: documentation does not pretend an exact SDK version is already selected. The observed local Node 22.22.0 is recorded in .nvmrc and satisfies the current setup guide.
+Reason: package details may change. Implementation: Core, CLI, and Vite plugin are pinned to 1.1.0-rc.2 with package-lock.json. The observed local Node 22.22.0 is recorded in .nvmrc and satisfies the current setup guide.
 
 ## ADR-007: Original minimal assets and local state
 
@@ -53,3 +53,15 @@ Reason: the rules prohibit post-deadline changes. Consequence: further developme
 ## Changes
 
 For a meaningful revision, record the date, decision changed, evidence, and consequences here. A failed prototype can change these decisions; do not quietly keep conflicting specifications.
+
+## ADR-009: Native scene and UIKitML with a small desktop adapter
+
+Implemented November 3, 2026. Keep the garden and spatial panel in an IWSDK native scene, with parentless deterministic procedural prototypes in the asset manifest. Use Horizon Button/ButtonLabel components with explicit centimeter dimensions rather than inheriting their large default pixel-style sizes. Desktop HTML and UIKit events route to the same GardenSession commands.
+
+Reason: editor-visible composition, reusable original assets, and one rules boundary. Consequence: native interaction must be checked in an active XR session; a desktop DOM click does not verify a spatial button. Disable locomotion and physics; proximity grabbing and discrete snap placement provide the required manipulation.
+
+## ADR-010: Install with npm 11 and retain the Three.js alias
+
+Implemented November 3, 2026. Require npm 11+, preserve the generator's super-three alias, and use the `$three` override reference. Omit optional MetaVR and semantic-reference tooling from the application dependencies. Use tsx to load TypeScript for Node tests.
+
+Evidence: the host's npm 9 rejected the alias override and optional semantic tooling attempted an unnecessary ONNX download. The reduced installation, typecheck, domain tests, and production build succeed. Consequence: contributors need npm 11; the README includes a parent-directory invocation for older hosts. No runtime AI or native headset dependency is introduced.

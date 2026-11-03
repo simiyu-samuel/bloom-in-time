@@ -1,6 +1,6 @@
 # Documentation map
 
-All design specifications are proposed until implementation evidence is recorded. The accepted product constraints are the title, game direction, solo development, IWSDK, and no physical headset access.
+The first playable two-flower slice exists. The six-puzzle campaign and release specifications remain targets until verified. The accepted product constraints are the title, game direction, solo development, IWSDK, and no physical headset access.
 
 ## Product and experience
 
@@ -18,11 +18,12 @@ All design specifications are proposed until implementation evidence is recorded
 - [Data contracts](architecture/data-contracts.md): level, placement, event, and save shapes.
 - [Runtime and input](architecture/runtime-and-input.md): IWSDK adapter, lifecycle, and scheduling.
 - [Decisions](architecture/decisions.md): rationale and consequences.
-- [Development workflow](engineering/development-workflow.md): future setup and Git conventions.
+- [Development workflow](engineering/development-workflow.md): current setup, SDK commands, and Git conventions.
 - [Testing and performance](engineering/testing-and-performance.md): evidence and budgets.
+- [Prototype verification](engineering/prototype-verification.md): actual first-slice results and limitations.
 - [Deployment](engineering/deployment.md): static hosting, release, and freeze.
 - [Asset and privacy policy](engineering/asset-and-privacy-policy.md): provenance, storage, and permissions.
-- [Asset register](assets/asset-register.csv): planned assets; no completion claims.
+- [Asset register](assets/asset-register.csv): original assets and dependency provenance.
 
 ## Delivery and competition
 

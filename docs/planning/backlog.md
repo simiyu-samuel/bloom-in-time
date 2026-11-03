@@ -1,6 +1,6 @@
 # Implementation backlog
 
-All items are planned. Complete them in dependency order and update status with evidence.
+The first playable slice is implemented. Complete remaining work in dependency order; the statuses below apply to the current prototype, not the entire planned campaign. See the [verification report](../engineering/prototype-verification.md).
 
 | ID | Priority / dependency | Work | Acceptance |
 | --- | --- | --- | --- |
@@ -24,3 +24,18 @@ All items are planned. Complete them in dependency order and update status with 
 P0 means needed for a credible submitted experience. P1 is a polish priority within the planned concept, not an invitation to add unrelated features. The basic bloom/music reward belongs in the mechanic proof; B09 improves its quality.
 
 Do not start generation/editor/multiplayer/AI features from this backlog. They require a separate scope decision after the competition baseline.
+
+## Milestone status after the first prototype
+
+| Items | State | Remaining work |
+| --- | --- | --- |
+| B01–B03 | Complete for first slice | Extend validation with new content |
+| B04 | Shared adapters work; touch reliability remains open | Occasional emulated presses need retry; simplify the panel and repeat the lifecycle matrix |
+| B05 | Verified for first slice | Repeat transport and bloom checks with new levels |
+| B06 | Partial | Campaign entry, next level, final replay, and complete onboarding |
+| B07 | Not started | Five more puzzles, solution witnesses, progression |
+| B08 | First-level saves implemented and checked | Campaign completion/progress migration |
+| B09 | Basic notes and flower bloom implemented | Full tree growth and final composition |
+| B10 | Controls implemented; partial checks | Full accessibility, either-hand, and recovery matrix |
+| B11 | Prototype report exists | Sustained profiling and full campaign flow |
+| B12–B14 | Not started | Public host, video/submission, and release freeze |

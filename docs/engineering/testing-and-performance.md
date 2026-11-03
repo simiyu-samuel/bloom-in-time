@@ -1,6 +1,6 @@
 # Testing and performance plan
 
-No application tests or performance measurements exist at the documentation checkpoint.
+The first application checks are recorded in the [prototype verification report](prototype-verification.md). The scenarios below remain the full release plan; passing the prototype does not establish campaign readiness or hardware performance.
 
 ## Evidence categories
 

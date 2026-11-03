@@ -1,0 +1,42 @@
+<style>
+  .garden-panel { width: 76; background-color: #f4f1df; border-radius: 2; padding-left: 2; padding-right: 2; padding-top: 2; padding-bottom: 2; flex-direction: column; gap: 1; }
+  .title { color: #263e32; font-size: 3; font-weight: 700; }
+  .status { color: #465a48; font-size: 1.9; }
+  .row { flex-direction: row; gap: 1; }
+  .control { height: 4.4; min-width: 0; line-height: 2.4; gap: 0; flex-shrink: 0; background-color: #e2e6d4; border-radius: 1; padding-left: 1.4; padding-right: 1.4; padding-top: .9; padding-bottom: .9; color: #263e32; font-size: 1.9; }
+</style>
+<div id="PanelRoot" class="garden-panel">
+  <div id="GardenTitle" class="title">Bloom in Time</div>
+  <div id="GardenStatus" class="status">Make both flowers bloom on the same beat.</div>
+  <div id="ArrivalStatus" class="status">Flower A: 3   Flower B: 4</div>
+  <div class="row">
+    <Button id="Btn_Play" class="control"><ButtonLabel id="Btn_PlayLabel">Play</ButtonLabel></Button>
+    <Button id="Btn_Bend" class="control"><ButtonLabel id="Btn_BendLabel">Select bend</ButtonLabel></Button>
+    <Button id="Btn_Delay" class="control"><ButtonLabel id="Btn_DelayLabel">Select delay</ButtonLabel></Button>
+    <Button id="Btn_Place" class="control"><ButtonLabel id="Btn_PlaceLabel">Place in socket</ButtonLabel></Button>
+  </div>
+  <div class="row">
+    <Button id="Btn_Return" class="control" style="width: 14"><ButtonLabel id="Btn_ReturnLabel">Return</ButtonLabel></Button>
+    <Button id="Btn_Turn" class="control" style="width: 11"><ButtonLabel id="Btn_TurnLabel">Turn</ButtonLabel></Button>
+    <Button id="Btn_Undo" class="control" style="width: 7"><ButtonLabel id="Btn_UndoLabel">Undo</ButtonLabel></Button>
+    <Button id="Btn_Hint" class="control" style="width: 7"><ButtonLabel id="Btn_HintLabel">Hint</ButtonLabel></Button>
+    <Button id="Btn_Reset" class="control" style="width: 10"><ButtonLabel id="Btn_ResetLabel">Reset</ButtonLabel></Button>
+    <Button id="Btn_ConfirmReset" class="control" style="display: none; width: 14; font-size: 1.6"><ButtonLabel id="Btn_ConfirmResetLabel">Confirm reset</ButtonLabel></Button>
+  </div>
+  <div class="row">
+    <Button id="Btn_Mute" class="control"><ButtonLabel id="Btn_MuteLabel">Sound on</ButtonLabel></Button>
+    <Button id="Btn_Motion" class="control"><ButtonLabel id="Btn_MotionLabel">Motion on</ButtonLabel></Button>
+    <Button id="Btn_Contrast" class="control"><ButtonLabel id="Btn_ContrastLabel">Contrast</ButtonLabel></Button>
+    <Button id="Btn_ViewLeft" class="control"><ButtonLabel id="Btn_ViewLeftLabel">View left</ButtonLabel></Button>
+    <Button id="Btn_ViewRight" class="control"><ButtonLabel id="Btn_ViewRightLabel">View right</ButtonLabel></Button>
+  </div>
+  <div class="row">
+    <Button id="Btn_Recenter" class="control"><ButtonLabel id="Btn_RecenterLabel">Recenter</ButtonLabel></Button>
+    <Button id="Btn_Near" class="control"><ButtonLabel id="Btn_NearLabel">Nearer</ButtonLabel></Button>
+    <Button id="Btn_Far" class="control"><ButtonLabel id="Btn_FarLabel">Farther</ButtonLabel></Button>
+    <Button id="Btn_Lower" class="control"><ButtonLabel id="Btn_LowerLabel">Lower</ButtonLabel></Button>
+    <Button id="Btn_Higher" class="control"><ButtonLabel id="Btn_HigherLabel">Higher</ButtonLabel></Button>
+    <Button id="Btn_XR" class="control"><ButtonLabel id="Btn_XRLabel">Enter VR</ButtonLabel></Button>
+    <Button id="Btn_Exit" class="control"><ButtonLabel id="Btn_ExitLabel">Exit VR</ButtonLabel></Button>
+  </div>
+</div>

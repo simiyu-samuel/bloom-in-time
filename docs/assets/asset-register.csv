@@ -1,5 +1,8 @@
 asset_id,description,source,creator,license_or_permission,modifications,attribution,status
-tree-prototype,Procedural miniature tree,Planned original work,Owner,TBD,None yet,TBD,planned
-piece-set,Bend splitter and delay meshes,Planned original work,Owner,TBD,None yet,TBD,planned
-flower-notes,Short synthesized notes,Planned original work,Owner,TBD,None yet,TBD,planned
-ui-font,Readable interface typeface,TBD,TBD,TBD,None yet,TBD,unselected
+tree-prototype,Procedural miniature tree and ceramic island,src/scene-assets/garden.scene-asset.ts,Project original,Source license undecided,Created for this prototype,No external asset,implemented
+piece-set,Bend splitter delay and socket meshes,src/scene-assets/garden.scene-asset.ts,Project original,Source license undecided,Created for this prototype,No external asset,implemented
+flower-notes,Short synthesized oscillator notes,src/adapters-audio.ts,Project original,Source license undecided,Created for this prototype,No external recording,implemented
+favicon,Original botanical SVG,public/favicon.svg,Project original,Source license undecided,Created for this prototype,No external asset,implemented
+desktop-font,Arial Helvetica Georgia system fallbacks,Browser system fonts,Platform vendors,Provided by operating system,None,Not redistributed,implemented
+spatial-font,UIKit bundled font,Installed UIKit dependency,Upstream authors,Preserve upstream package font notices,None,Dependency distribution,implemented
+sdk-scaffold,Meta starter configuration and scoped guidance,create-iwsdk 1.1.0-rc.2,Meta Platforms,MIT,Configuration adapted,LICENSES/Meta-IWSDK.txt,implemented

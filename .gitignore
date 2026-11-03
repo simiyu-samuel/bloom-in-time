@@ -25,3 +25,7 @@ Thumbs.db
 # Large working media; add final submission assets deliberately
 recordings/
 captures/
+
+# IWSDK local sessions and generated runtime data
+.iwsdk/
+artifacts/

@@ -2,42 +2,59 @@
 
 **Guide the light. Find the rhythm. Wake the garden.**
 
-A seated VR puzzle game in which the player rearranges miniature pathways of light so musical flowers bloom together.
+A seated VR puzzle game in which you rearrange miniature pathways of light so musical flowers bloom together. Built solo for the Meta VR Start Developer Competition 2026 with the Immersive Web SDK.
 
-## Project state
+The first playable prototype contains one two-flower puzzle, a procedural garden, visible light pulses, synthesized flower notes, desktop controls, and spatial hand controls. Five further puzzles and the public competition deployment remain planned. Development uses XR emulation; no physical Quest testing has been performed.
 
-Documentation baseline, created November 3, 2026. No game code, installed dependencies, deployed application, or hardware test results exist yet. The product direction and constraints are agreed; detailed specifications below are proposed implementation decisions that the first prototype must validate.
+## Run locally
 
-| Item | Direction |
-| --- | --- |
-| Competition | Meta VR Start Developer Competition 2026 |
-| Track / division | Gaming / New Experience |
-| Developer | Solo |
-| Stack | IWSDK, TypeScript, Three.js, Vite |
-| Experience | Fully virtual, seated, usable end-to-end with hands |
-| Hardware access | None; development and demo capture use XR emulation |
-| Release target | Six authored puzzles around one evolving miniature tree |
-| Deadline | November 18, 2026, 23:00 Africa/Nairobi / 20:00 UTC |
-| Hosting | Static HTTPS deployment; GitHub Pages is the initial proposal |
+Use Node **22.22.0** (`.nvmrc`) and **npm 11 or newer**.
 
-## Start here
+```bash
+npm ci
+npm run dev
+```
 
-1. [Documentation map](docs/README.md)
-2. [Vision and scope](docs/product/vision-and-scope.md)
-3. [Game rules and six-level progression](docs/product/game-design.md)
-4. [Architecture and diagrams](docs/architecture/overview.md)
-5. [Development sequence](docs/planning/roadmap.md)
-6. [Current backlog](docs/planning/backlog.md)
-7. [Submission requirements](docs/competition/requirements.md)
+The IWSDK development environment serves the application at **https://localhost:8081/** and provides its scene editor and Quest emulator. The first managed-browser launch may download Chromium. Use `npm run dev:down` to stop the managed session. `npm run dev:runtime` runs just Vite when the managed tools are unnecessary.
 
-## First implementation milestone
+If this machine still uses npm 9, invoke npm 11 **from the parent directory** to avoid npm 9 parsing the project's Three.js alias override before starting the newer npm:
 
-Prove a two-flower puzzle with grabbing, automatic alignment, a splitter, and one delay. The same authored solution must evaluate identically through desktop and emulated hand input. Do this before building the complete garden.
+```bash
+cd ..
+npx --yes npm@11 --prefix ./bloom-in-time ci
+cd bloom-in-time
+```
 
-This repository is intentionally documentation-only at this checkpoint. Instructions in [development workflow](docs/engineering/development-workflow.md) describe future setup; they are not commands that have already been run.
+## Play the prototype
 
-## Verification and ownership
+1. Wake the garden. Flower A receives light after 3 beats; Flower B after 4.
+2. Select the bend and return it to the tray.
+3. Select the golden delay pod and place it in the empty socket.
+4. Let one complete eight-beat cycle play. Both flowers now receive light on beat 4.
 
-Emulation is accepted for this competition, but Quest performance, physical comfort, and real hand-tracking reliability remain unverified without hardware. See the [verification plan](docs/engineering/testing-and-performance.md).
+In VR, pinch a piece to grab it and release near the socket to snap it into place. The spatial panel also provides select/place/return/turn controls, undo, hint, confirmed reset, pause, comfort settings, and exit. Desktop controls use the same validated commands. Progress and preferences stay in the current browser and origin.
 
-No open-source license has been selected. Original material, dependency licenses, and external assets must be tracked separately; see [asset and privacy policy](docs/engineering/asset-and-privacy-policy.md).
+## Check the build
+
+```bash
+npm test
+npm run typecheck
+npm run build
+npm run preview
+```
+
+The production output is `dist/`; it requires a static HTTPS host for WebXR. No backend, account, API key, or physics engine is required. The lockfile pins the verified dependency graph to IWSDK **1.1.0-rc.2**.
+
+## Project guide
+
+- [Documentation map](docs/README.md)
+- [Actual status and next work](docs/planning/status.md)
+- [Game design and six-puzzle plan](docs/product/game-design.md)
+- [Architecture and diagrams](docs/architecture/overview.md)
+- [Development and SDK workflow](docs/engineering/development-workflow.md)
+- [Prototype verification report](docs/engineering/prototype-verification.md)
+- [Competition requirements](docs/competition/requirements.md)
+
+The submission deadline is **November 18, 2026, 23:00 Africa/Nairobi / 20:00 UTC**. Quest performance, physical comfort, and real tracking reliability remain unverified. The full campaign, video, and release checklist are unfinished.
+
+No source license has been selected for original project material. See [third-party notices](THIRD_PARTY_NOTICES.md) and the [asset register](docs/assets/asset-register.csv).

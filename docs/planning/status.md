@@ -4,29 +4,28 @@ Last updated: November 3, 2026.
 
 | Area | Actual state |
 | --- | --- |
-| Title / direction | Bloom in Time selected; seated light-and-timing puzzle |
-| Developer | Solo |
-| Start / competition registration | Owner reports application and registration submitted; membership acceptance has not been independently verified |
-| Physical headset | No access expected at any stage |
-| Documentation | Product, design, architecture, engineering, delivery, and submission baseline prepared |
-| Application code | Not started |
-| SDK / dependencies | Not scaffolded or installed |
-| Host / remote repo | Not created |
-| Game tests / performance | Not run; no game exists yet |
+| Title / direction | Bloom in Time; seated hands-first light-and-timing puzzle |
+| Developer | Solo; no physical headset access expected |
+| Registration | Owner reports application/registration submitted; Start acceptance not independently verified |
+| Documentation | Product, design, architecture, engineering, delivery, submission baseline, and first prototype report |
+| Application | First two-flower puzzle implemented with a procedural garden, pulses, bloom, synthesized notes, undo/hint/reset, comfort controls, and local saves |
+| SDK | IWSDK 1.1.0-rc.2 pinned in package-lock.json; Node 22.22.0; npm 11+ |
+| Repository | Public GitHub remote: https://github.com/simiyu-samuel/bloom-in-time |
+| Verification | 10 automated tests, typecheck, production build, desktop flow, emulated hands, and static production smoke test checked; touch misses remain a follow-up issue (see report) |
+| Hosting | No public game deployment yet |
+| Campaign | One prototype puzzle; the six-puzzle release remains planned |
 | Submission / video | Draft plans only; not submitted or recorded |
 
-## Immediate next phase
+## Next development phase
 
-After this documentation checkpoint, begin B01 in the [backlog](backlog.md): generate and inspect the current IWSDK starter, establish a buildable baseline, then prove the two-flower mechanic.
+Build the authored campaign around the verified mechanic: add level loading, witness validation, progression, and replay, then implement the remaining five puzzles. Simplify the spatial controls and verify the tutorial and each new level through emulated hands. Continue with [B06/B07 in the backlog](backlog.md); keep the existing two-flower loop passing.
 
-The user requested documentation and commits before development. This checkpoint does not authorize silently skipping into implementation in the same task.
+## Evidence
 
-## Evidence log
+The [prototype verification report](../engineering/prototype-verification.md) records actual scenarios, environment, corrections, and remaining limitations. Domain arrivals change from A=3/B=4 to A=4/B=4. Direct emulated grabs and spatial controls use the same validated session. Emulation establishes no physical Quest performance or tracking result.
 
-Preparation checks passed on November 3, 2026: 29 Markdown documents, 54 local Markdown links, matching fenced blocks, valid JSON/CSV, and no trailing whitespace. The logical planning fixture was checked independently: its initial arrivals are 3/4 and its solution arrivals are 4/4. The submission draft is 217 words; its tagline is 50 characters.
-
-These are documentation and fixture consistency checks, not application or hardware tests. Local baseline commits are recorded in Git history. Add actual application verification evidence here as work progresses. Checkmarks in future plans do not substitute for evidence.
+The original documentation checkpoint remains in Git history. The owner subsequently authorized implementation and connecting the named GitHub remote. No public deployment or competition submission is implied by a successful local build.
 
 ## Remaining owner decisions
 
-Remote repository service/visibility and source licensing remain unchosen. The developer account setup and Start membership acceptance should be confirmed before submission. None of these prevents local prototyping.
+Choose the final host/URL and source license. Confirm Start membership acceptance and developer-account requirements before submission. These do not prevent continued local development.

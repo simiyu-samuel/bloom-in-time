@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#142c24" />
+  <meta name="description" content="Guide the light. Find the rhythm. Wake a sleeping musical garden with your hands." />
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <title>Bloom in Time — A little light changes everything</title>
+</head>
+<body>
+  <div id="scene-container" aria-label="An interactive miniature musical garden"></div>
+  <main id="interface">
+    <header class="masthead">
+      <a class="wordmark" href="./" aria-label="Bloom in Time home"><span class="brand-icon">✳</span><span>BLOOM<span class="brand-small">IN TIME</span></span></a>
+      <div class="header-actions"><span class="garden-label"><i></i> THE QUIET GROVE</span><button id="enter-vr" class="pill" title="Enter an immersive session">Enter VR <span aria-hidden="true">↗</span></button></div>
+    </header>
+
+    <section class="story-panel" aria-labelledby="level-title">
+      <div class="eyebrow"><span>01</span> A LITTLE BEGINNING</div>
+      <h1 id="level-title">A moment<br /><em>longer.</em></h1>
+      <p class="intro">Even a sleeping garden<br />remembers its song.</p>
+      <div class="rule-divider"></div>
+      <p class="objective">Give the shorter path one extra beat.<br />Let both flowers bloom together.</p>
+      <button id="play" class="primary"><span id="play-label">Wake the garden</span><span aria-hidden="true">→</span></button>
+      <p class="microcopy" id="play-note">Take your time. There is no rush.</p>
+      <div class="arrival-card" aria-live="polite">
+        <div class="card-caption">A LITTLE LISTENING</div>
+        <div class="arrival-row"><span><i class="flower-dot amber"></i> Flower A</span><strong id="arrival-a">3 <small>beats</small></strong></div>
+        <div class="arrival-row"><span><i class="flower-dot sage"></i> Flower B</span><strong id="arrival-b">4 <small>beats</small></strong></div>
+        <div class="harmony-status" id="harmony-status">Almost in harmony</div>
+      </div>
+    </section>
+
+    <aside class="field-note">
+      <span class="note-symbol" aria-hidden="true">⌁</span>
+      <span class="eyebrow">A NOTE FROM THE GARDEN</span>
+      <p>Some things bloom<br />when you give them<br /><em>a little space.</em></p>
+      <div class="note-line"></div>
+      <p class="small">Select the bend in the tree<br />and return it to the tray.<br />Try the golden delay pod.</p>
+    </aside>
+
+    <section class="garden-toolbar" aria-label="Garden actions">
+      <div class="beat-row"><span class="eyebrow">THE LIGHT'S JOURNEY</span><div id="beat-track" class="beat-track" aria-label="Eight repeating beats"></div><span class="cycle-label">8 BEATS · ONE BREATH</span></div>
+      <p id="garden-message" class="garden-message" aria-live="polite">Let a little light in.</p>
+      <div class="pieces" aria-label="Choose a piece">
+        <button id="select-bend" class="piece-card"><span class="piece-glyph bend-glyph">⌞</span><span><strong>Bend</strong><small>A change of direction</small></span><span class="piece-time">+0</span></button>
+        <button id="select-delay" class="piece-card"><span class="piece-glyph delay-glyph">◉</span><span><strong>Delay pod</strong><small>A moment of patience</small></span><span class="piece-time">+1</span></button>
+      </div>
+      <div class="edit-actions"><button id="place">Place in socket</button><button id="return">Return to tray</button><button id="turn">Turn piece ↻</button><span class="action-divider"></span><button id="undo">↶ Undo</button><button id="hint">✧ Hint</button><button id="reset">Reset</button></div>
+    </section>
+
+    <footer class="footer">
+      <span>GUIDE THE LIGHT. FIND THE RHYTHM.</span>
+      <div class="footer-actions"><button id="view-left" aria-label="Turn garden left">↶</button><span>TURN THE GARDEN</span><button id="view-right" aria-label="Turn garden right">↷</button><button id="settings-toggle" aria-expanded="false">Settings</button></div>
+      <span class="footer-end">A SMALL WORLD, IN YOUR HANDS.</span>
+    </footer>
+    <section id="settings-panel" class="settings-panel" hidden aria-label="Settings">
+      <h2>Make yourself comfortable.</h2>
+      <button id="mute" aria-pressed="false">Sound on</button>
+      <button id="motion" aria-pressed="false">Reduce motion</button>
+      <button id="contrast" aria-pressed="false">High contrast</button>
+      <div class="setting-row"><span>Garden height</span><button id="lower">Lower</button><button id="higher">Higher</button></div>
+      <div class="setting-row"><span>Garden distance</span><button id="nearer">Nearer</button><button id="farther">Farther</button></div>
+      <button id="recenter">Recenter garden</button>
+      <p>Your progress stays in this browser.</p>
+      <button id="settings-close">Back to the garden</button>
+    </section>
+    <section id="reset-dialog" class="confirm-panel" hidden role="dialog" aria-modal="true" aria-labelledby="reset-title">
+      <h2 id="reset-title">Begin this little moment again?</h2>
+      <p>The garden will return to its starting arrangement.</p>
+      <button id="confirm-reset" class="primary">Reset puzzle</button><button id="cancel-reset">Keep tending</button>
+    </section>
+    <div id="loading" class="loading"><span class="loading-flower">✳</span><p>A small world is waking...</p></div>
+    <div id="error" class="error-panel" hidden role="alert"></div>
+  </main>
+  <script type="module" src="/src/index.ts"></script>
+</body>
+</html>

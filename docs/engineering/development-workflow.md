@@ -1,40 +1,48 @@
 # Development workflow
 
-Status: future workflow. No scaffold or dependency installation has been performed.
+The first playable slice was generated and implemented on November 3, 2026. Read [status](../planning/status.md) and the [verification report](prototype-verification.md) before extending it.
 
-## Environment
+## Environment and installation
 
-The preparation host reports Node 22.22.0 and npm 9.2.0. The current Meta guide supports Node 20.19+ in the 20 line, 22.12+ in the 22 line, or 24+. The repository records the observed supported Node version in .nvmrc.
+Use Node 22.22.0 from `.nvmrc` and npm 11+. Run `npm ci` from the repository, then `npm run dev`. The initial host had npm 9.2.0, whose override parser rejected the generator's Three.js alias. When upgrading globally is undesirable, launch npm 11 from the parent as documented in the root README.
 
-Use npm for the initial project unless generator requirements dictate otherwise. Commit a lockfile once dependencies exist. Record the selected IWSDK version in status and release evidence.
+IWSDK Core, CLI, and Vite plugin are pinned to 1.1.0-rc.2. Preserve `three` as the `super-three` alias and the generated Vite deduplication settings. The override uses `$three` so all consumers resolve to that same dependency. Commit changes to both package.json and package-lock.json.
 
-## Bootstrap after documentation
+The official generator was run in an empty temporary directory with TypeScript, VR, grabbing, no locomotion, no physics, no Git, and no automatic install. Selected runtime/configuration files were copied into the existing documentation repository. The starter robot, decorations, and audio were removed. Optional MetaVR and semantic-reference packages are omitted; the SDK-managed Chromium emulator and public documentation provide the current local workflow.
 
-1. Review current official setup and input guides in [references](../references.md).
-2. Run npm create @iwsdk@latest in an empty temporary scaffold directory.
-3. Choose TypeScript and virtual reality. Inspect available feature prompts; enable required hands/grabbing and avoid unnecessary locomotion or room features.
-4. Decline Git initialization in the temporary scaffold if offered.
-5. Inspect the generated manifest, configuration, source, and scripts.
-6. Copy the generated application files deliberately into this repository. Preserve these documents, Git history, and repository instructions.
-7. Resolve any configuration overlap and install supported dependencies once.
-8. Verify the starter, record versions, then commit the scaffold.
+## Commands
 
-Do not run a generator over a nonempty repository without reviewing its overwrite behavior. Do not copy dependencies, generated builds, or a second .git directory from the temporary scaffold.
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Start/restart the managed SDK development environment in the foreground |
+| `npm run dev:runtime` | Run Vite without managed editor/browser orchestration |
+| `npm run dev:status` / `npm run dev:down` | Inspect / stop this repository's managed session |
+| `npm test` | Run the Node test suite with tsx for TypeScript loading |
+| `npm run typecheck` | Check application TypeScript |
+| `npm run build` | Produce static assets in dist |
+| `npm run preview` | Inspect the production output locally |
 
-## Intended commands
+Use the installed `node_modules/.bin/iwsdk` for targeted SDK commands. An example verification session:
 
-The SDK starter currently documents npm run dev, npm run build, npm run preview, and npm run typecheck. Confirm actual scripts before use. Add a test command when domain tests are introduced. No command in this section works in this documentation-only baseline.
+```bash
+node_modules/.bin/iwsdk dev up --headless --open
+node_modules/.bin/iwsdk runtime wait --timeout 45000
+node_modules/.bin/iwsdk xr enter --input-json '{}'
+node_modules/.bin/iwsdk xr set-input-mode --input-json '{"mode":"hand"}'
+node_modules/.bin/iwsdk xr list-targets
+node_modules/.bin/iwsdk xr run-sequence --input-json '{"device":"hand-right","steps":[{"target":"Btn_Play","press":{}}]}'
+```
 
-## Development order
+Confirm `xr status` reports an active emulated session before claiming hand verification. Query the `GardenState` component through `ecs find` and `ecs query` to distinguish a completed gesture from an actual game-state change. Entity indexes are runtime-generated; find them each session.
 
-Implement the pure timing fixture first, connect a minimal board, add the input adapters, then complete the short playable loop. Add the remaining content and presentation only after that gate passes.
+Local certificates, screenshots, browser sessions, dependencies, and builds are ignored. Do not commit them or the SDK's downloaded browser. Stop the owned managed session after verification.
 
-Keep errors explicit at data boundaries and use typed IDs. Avoid large frameworks unrelated to the spatial application. Record new architectural commitments in [decisions](../architecture/decisions.md).
+## Implementation order and boundaries
+
+`src/domain/` owns the deterministic evaluator. `src/application/` owns validated commands, transport, undo, and save boundaries. `src/content/` owns authored levels. The manifest and native scene own composition; `GardenSystem` adapts desktop and hand interactions to the same session. Rendering and audio consume derived timing and never decide success.
+
+Complete the two-flower integration gate before expanding the campaign. Validate every new level and its solution witness. Prefer native scene/UI authoring and small original assets. Record meaningful architectural changes in [decisions](../architecture/decisions.md).
 
 ## Commits and evidence
 
-Use small coherent commits after completed changes. Before each commit, review changed files, run appropriate checks, and update [status](../planning/status.md). Preserve the initial documentation history.
-
-A docs-only change needs link/content validation, not game tests. Engine changes need meaningful timing/topology tests. Input and lifecycle changes need integration evidence. Rendering changes need browser inspection and a recorded performance context.
-
-Never label an emulator session as physical device testing. Never record a test as passed merely because a script exists.
+Commit coherent completed changes, run appropriate checks, and update status. Engine changes need timing/topology tests; input and lifecycle changes need real runtime evidence; visual changes need rendered inspection. Keep physical Quest results distinct from emulation. Never record a check as passed merely because a script or plan exists.

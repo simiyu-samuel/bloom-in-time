@@ -26,4 +26,6 @@
 
 ## Decisions still open
 
-Hosting account and exact URL; remote repository visibility; source license; final art/audio asset selection; actual puzzle durations and hardware-specific quality settings. Keep implementation moving on reversible local decisions and record any changed architecture.
+Hosting account and exact URL; source license; final art/audio asset selection; actual puzzle durations and hardware-specific quality settings. Keep implementation moving on reversible local decisions and record any changed architecture.
+
+The public GitHub remote is connected at https://github.com/simiyu-samuel/bloom-in-time. The initial SDK selection is pinned in package-lock.json.

@@ -3,7 +3,7 @@
 Scope: this repository and all descendants.
 
 - Read README.md, docs/planning/status.md, and the documentation relevant to the requested change before editing.
-- This baseline is documentation-only. Begin game implementation when the user requests that phase.
+- The first playable prototype exists. Preserve its verified two-flower loop while extending the campaign.
 - Preserve the agreed title, solo scope, IWSDK path, and no-headset constraint.
 - Keep the puzzle engine independent of IWSDK, rendering, audio, and browser storage.
 - Use integer beat timing and the rules in docs/architecture/puzzle-engine.md.
